@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cat Rain Game</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #87ceeb, #6a5acd);
+      font-family: Arial, sans-serif;
+    }
+
+    #score {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 1000;
+    }
+
+    .cat {
+      position: absolute;
+      top: -50px;
+      font-size: 40px;
+      cursor: pointer;
+      user-select: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="score">Score: 0</div>
+
+  <script>
+    let score = 0;
+
+    function createCat() {
+      const cat = document.createElement("div");
+
+      cat.classList.add("cat");
+      cat.innerText = "🐱";
+
+      cat.style.left = Math.random() * window.innerWidth + "px";
+
+      const duration = 3 + Math.random() * 3;
+      cat.style.animationDuration = duration + "s";
+
+      cat.addEventListener("click", () => {
+        score++;
+        document.getElementById("score").innerText = "Score: " + score;
+        cat.remove();
+      });
+
+      document.body.appendChild(cat);
+
+      setTimeout(() => {
+        cat.remove();
+      }, duration * 1000);
+    }
+
+    setInterval(createCat, 500);
+  </script>
+
+</body>
+</html>
